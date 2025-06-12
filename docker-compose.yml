@@ -1,0 +1,67 @@
+version: '3'
+
+networks:
+  autonomous-system:
+    name: autonomous-system-net
+
+services:
+
+  computer-vision:
+    
+    image: "as-computer-vision"
+    
+    container_name: as-computer-vision
+    
+    networks:
+      - autonomous-system
+    
+  slam:
+    
+    image: "as-slam"
+    
+    container_name: as-slam
+    
+    networks:
+      - autonomous-system
+
+  path-planning:
+    
+    image: "as-path-planning"
+    
+    container_name: as-path-planning
+    
+    networks:
+      - autonomous-system
+  
+  high-level-control:
+    
+    image: "as-high-level-control"
+    
+    container_name: as-high-level-control
+    
+    networks:
+      - autonomous-system
+
+  message-broker:
+    
+    image: "rabbitmq:3.12-management"
+
+    container_name: as-message-broker
+    
+    ports:
+      - "15672:15672"  # Management interface
+      - "5672:5672"    # AMQP protocol
+    
+    volumes:
+      - as-message-broker-data:/var/lib/rabbitmq
+    
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+
+    networks:
+      - autonomous-system
+
+volumes:
+  
+  as-message-broker-data:
