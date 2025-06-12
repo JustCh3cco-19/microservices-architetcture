@@ -7,8 +7,7 @@ bash build_image.sh
 
 cd ..
 
-cd microservice-computer-vision
-#cd dummy-computer-vision
+cd dummy-computer-vision
 bash build_image.sh
 
 cd ..
